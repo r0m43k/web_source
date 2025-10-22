@@ -1,0 +1,12 @@
+FROM php:8.2-apache
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libzip-dev libicu-dev zlib1g-dev libonig-dev unzip \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN a2enmod rewrite
+RUN docker-php-ext-install pdo pdo_mysql mbstring zip intl
+
+WORKDIR /var/www/html
+COPY . /var/www/html/
+
